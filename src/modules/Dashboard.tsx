@@ -105,7 +105,7 @@ const Dashboard: React.FC<DashboardProps> = ({}) => {
           medium,
           hard,
         });
-        const problemsPerDay = formatProblemsPerDay(problemSolvedValues);
+        const problemsPerDay = formatProblemsPerDay(problemSolvedValues as {timestamp: number}[]);
         const streaksCount = getTotalNumberOfStreaks(problemsPerDay);
         setProblemsPerDay(problemsPerDay);
         setStreak(streaksCount);
