@@ -50,7 +50,7 @@ interface GithubUser {
   /* other user data can be added here, but not needed for now */
 }
 export default class GithubHandler {
-  base_url: string = 'https://api.github.com';
+  base_url = 'https://api.github.com';
   private client_secret: string | null = GITHUB_CLIENT_SECRET ?? '';
   private client_id: string | null = GITHUB_CLIENT_ID ?? '';
   private redirect_uri: string | null = GITHUB_REDIRECT_URI ?? '';
