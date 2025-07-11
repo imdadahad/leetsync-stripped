@@ -1,6 +1,6 @@
 import { getClient } from '../../lib/client';
 import { Submission } from '../../types/Submission';
-import { GET_SUBMISSIONS, GET_SUBMISSION_DETAILS } from './submission.query';
+import { GET_SUBMISSIONS_FOR_QUESTION, GET_SUBMISSION_DETAILS } from './submission.query';
 
 export const getSubmission = async (
   submissionId: number | string,
@@ -21,7 +21,7 @@ export const getAllSubmission = async (
 ): Promise<{ submissionDetails: Submission } | null> => {
   try {
     const client = getClient();
-    return client.request(GET_SUBMISSIONS, {
+    return client.request(GET_SUBMISSIONS_FOR_QUESTION, {
       questionSlug,
       limit: 20,
       offset: 0,

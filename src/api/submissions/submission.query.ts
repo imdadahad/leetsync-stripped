@@ -56,7 +56,7 @@ query submissionDetails($submissionId: Int!) {
 }
 `;
 
-export const GET_SUBMISSIONS = `query submissionList($offset: Int!, $limit: Int!, $lastKey: String, $questionSlug: String!, $lang: Int, $status: Int) {
+export const GET_SUBMISSIONS_FOR_QUESTION = `query submissionList($offset: Int!, $limit: Int!, $lastKey: String, $questionSlug: String!, $lang: Int, $status: Int) {
   questionSubmissionList(
   offset: $offset
   limit: $limit
