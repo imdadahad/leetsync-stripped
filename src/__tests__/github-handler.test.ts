@@ -1,11 +1,5 @@
 import GithubHandler from '../handlers/GithubHandler';
 
-jest.mock('../constants', () => ({
-  GITHUB_CLIENT_ID: '',
-  GITHUB_CLIENT_SECRET: '',
-  GITHUB_REDIRECT_URI: '',
-}));
-
 describe('GithubHandler utility methods', () => {
   beforeEach(() => {
     (global as any).chrome = {
