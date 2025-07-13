@@ -33,8 +33,9 @@ import {
 import React, { useEffect, useState } from 'react';
 import { BiCalendarHeart, BiTrashAlt, BiUnlink } from 'react-icons/bi';
 import { CiSettings } from 'react-icons/ci';
+import { HiRefresh } from "react-icons/hi";
 import { TbSlashes } from 'react-icons/tb';
-import { GithubHandler } from '../handlers';
+import { GithubHandler, LeetCodeHandler } from '../handlers';
 import { CustomEditableComponent } from './Editable';
 
 interface SettingsMenuProps {}

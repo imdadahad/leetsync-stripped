@@ -131,6 +131,8 @@ const SelectRepositoryStep = ({ nextStep }: { nextStep: () => void}) => {
 
         const repoName = repositoryURL.split("/").pop()
         const username = repositoryURL.split("/").slice(-2)[0]
+        console.log(`username: ${username}`)
+        console.log(`repoName: ${repoName}`)
         if (!repoName || !username) {
             return setError("Invalid repository URL")
         }
