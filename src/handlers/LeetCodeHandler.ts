@@ -1,6 +1,6 @@
-import { getAllSubmission, getSubmission } from '../api/submissions/getSubmission';
-import { getSubmissions } from "../api/submissions/getSubmissions";
-import { Submission } from '../types/Submission';
+import { getAllSubmission, getSubmission } from '../api/submissions/getSubmission'
+import { getSubmissions } from "../api/submissions/getSubmissions"
+import { RestSubmission, Submission } from '../types/Submission'
 
 class LeetCodeHandler {
   async getSubmission(questionSlug: string): Promise<Submission | null> {
@@ -28,7 +28,7 @@ class LeetCodeHandler {
     return result.submissionDetails;
   }
 
-  getSubmissions = async (leetcodeSession: string) => {
+  getSubmissions = async (leetcodeSession: string): Promise<RestSubmission[]> => {
         const submissions = await getSubmissions(leetcodeSession)
         return submissions
   }

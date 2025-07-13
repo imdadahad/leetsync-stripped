@@ -76,6 +76,7 @@ const Dashboard: React.FC<DashboardProps> = ({}) => {
   const [problemsPerDay, setProblemsPerDay] = React.useState<{
     [date: string]: number;
   }>();
+  const [lastSolved, setLastSolved] = React.useState<{slug: string, timestamp: Date } | null>(null)
   const [githubUsername, setGithubUsername] = React.useState('');
   const [githubRepo, setGithubRepo] = React.useState('');
 
@@ -83,11 +84,12 @@ const Dashboard: React.FC<DashboardProps> = ({}) => {
 
   React.useEffect(() => {
     chrome.storage.sync.get(
-      ['problemsSolved', 'github_username', 'github_leetsync_repo'],
+      ['problemsSolved', 'github_username', 'github_leetsync_repo', 'lastSolved'],
       (result) => {
-        const { problemsSolved, github_username, github_leetsync_repo } = result;
+        const { problemsSolved, github_username, github_leetsync_repo, lastSolved } = result;
         setGithubUsername(github_username);
         setGithubRepo(github_leetsync_repo);
+        setLastSolved(lastSolved)
         if (!problemsSolved) return;
         let [easy, medium, hard] = [0, 0, 0];
         const problemSolvedValues = Object.values(problemsSolved);
@@ -125,7 +127,7 @@ const Dashboard: React.FC<DashboardProps> = ({}) => {
       pos="relative"
     >
       <Box pos="absolute" top="24px" right="16px">
-        <SettingsMenu />
+        <SettingsMenu lastSolved={lastSolved}/>
       </Box>
       <VStack w="100%" h="100%" align="flex-start" justify={'flex-start'} spacing={8}>
         <HStack w="100%" align={'center'}>
