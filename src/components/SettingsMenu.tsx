@@ -83,6 +83,15 @@ const SettingsMenu: React.FC<SettingsMenuProps> = () => {
     if (!repoName || !username) {
       return setError('Invalid repository URL');
     }
+    chrome.storage.sync.set({
+        github_username: username,
+        github_leetsync_repo: repoName
+    }, () => {
+      console.log('Repository Linked Successfully');
+      setGithubUsername(username)
+      setGithubRepo(repoName);
+      setOpen(null);
+    });
 
     setLoading(true);
     const github = new GithubHandler();
@@ -349,6 +358,7 @@ const SettingsMenu: React.FC<SettingsMenuProps> = () => {
         </MenuGroup>
       </MenuList>
     </Menu>
+    </HStack>
   );
 };
 export default SettingsMenu;

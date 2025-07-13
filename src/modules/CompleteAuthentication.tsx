@@ -141,6 +141,17 @@ const SelectRepositoryStep = ({ nextStep }: { nextStep: () => void}) => {
         const github = new GithubHandler()
         console.log(`username: ${username}`)
         console.log(`repoName: ${repoName}`)
+        if(!username || !repoName) {
+            return setError("No valid username or repo name")
+        }
+        chrome.storage.sync.set({
+            github_username: username,
+            github_leetsync_repo: repoName
+        }, () => {
+            console.log("Repository Linked Successfully")
+            navigate(0)
+        })
+
         const isFound = await github.checkIfRepoExists(`${username}/${repoName}`)
         setLoading(false)
         if (!isFound) {
