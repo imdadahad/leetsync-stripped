@@ -1,4 +1,5 @@
 import { getAllSubmission, getSubmission } from '../api/submissions/getSubmission';
+import { getSubmissions } from "../api/submissions/getSubmissions";
 import { Submission } from '../types/Submission';
 
 class LeetCodeHandler {
@@ -25,6 +26,11 @@ class LeetCodeHandler {
     if (!result?.submissionDetails) return null;
 
     return result.submissionDetails;
+  }
+
+  getSubmissions = async (leetcodeSession: string) => {
+        const submissions = await getSubmissions(leetcodeSession)
+        return submissions
   }
 }
 

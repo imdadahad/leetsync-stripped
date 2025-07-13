@@ -63,6 +63,17 @@ const SettingsMenu: React.FC<SettingsMenuProps> = () => {
       },
     );
   };
+
+  const handleClickSyncNow = async () => {
+        const leetcodeSession = (await chrome.storage.sync.get('leetcode_session'))?.[
+            'leetcode_session'
+          ];
+
+        const leetcodeHandler = new LeetCodeHandler()
+        const submissionsJSON = await leetcodeHandler.getSubmissions(leetcodeSession)
+        console.log(submissionsJSON)
+
+  }
   const handleLinkRepo = async () => {
     if (!newRepoURL) return setError('Repository URL is required');
     if (!accessToken) return setError('Access token is required');
@@ -142,7 +153,9 @@ const SettingsMenu: React.FC<SettingsMenuProps> = () => {
 
   if (!githubUsername || !githubRepo || !accessToken) return null;
   return (
-    <Menu size={'lg'} placement="bottom-end">
+    <HStack spacing={2}>
+      <Button as={IconButton} aria-label="Sync Now" icon={<HiRefresh />} variant="outline" onClick={handleClickSyncNow}/>
+      <Menu size={'lg'} placement="bottom-end">
       <MenuButton as={IconButton} aria-label="Options" icon={<CiSettings />} variant="outline" />
       <MenuList fontSize={'14px'}>
         <HStack px={4} py={2}>
