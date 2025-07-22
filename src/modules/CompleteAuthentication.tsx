@@ -18,6 +18,29 @@ import Logo from "../components/Logo"
 import { GithubHandler } from "../handlers"
 import { Footer } from "./Footer"
 
+const StartOnboarding = ({ nextStep }: { nextStep: () => void}) => {
+    return (
+        <VStack w="100%" h="100%" align="center" justify={"center"}>
+            <Logo />
+            <VStack w="100%">
+                <Heading size="lg">Welcome 👋</Heading>
+                <Text color="GrayText" fontSize={"sm"} w="90%" textAlign={"center"}>
+                    LeetSync is a Chrome extension that syncs your submissions to GitHub. Setup now.
+                </Text>
+            </VStack>
+
+            <VStack w="100%" py={4}>
+                <Button size="md" colorScheme={"green"} w="95%" onClick={() => nextStep()}>
+                    Complete Setup
+                </Button>
+                <Text fontSize={"xs"} color="gray.400">
+                    This will take less than 2 minutes
+                </Text>
+            </VStack>
+            <Footer />
+        </VStack>
+    )
+}
 const AuthorizeWithGithub = ({ nextStep }: { nextStep: () => void}) => {
     const [accessToken, setAccessToken] = useState<string>("")
     const handleClicked = () => {
@@ -119,7 +142,6 @@ const AuthorizeWithLeetCode = ({ nextStep }: { nextStep: () => void}) => {
     )
 }
 const SelectRepositoryStep = ({ nextStep }: { nextStep: () => void}) => {
-    const [accessToken, setAccessToken] = useState<string | null>(null)
     const [repositoryURL, setRepositoryURL] = useState<string>("")
     const [loading, setLoading] = useState<boolean>(false)
     const [error, setError] = useState<string | null>(null)
@@ -127,7 +149,6 @@ const SelectRepositoryStep = ({ nextStep }: { nextStep: () => void}) => {
 
     const handleLinkRepo = async () => {
         if (!repositoryURL) return setError("Repository URL is required")
-        if (!accessToken) return setError("Access token is required")
 
         const repoName = repositoryURL.split("/").pop()
         const username = repositoryURL.split("/").slice(-2)[0]
@@ -139,11 +160,7 @@ const SelectRepositoryStep = ({ nextStep }: { nextStep: () => void}) => {
 
         setLoading(true)
         const github = new GithubHandler()
-        console.log(`username: ${username}`)
-        console.log(`repoName: ${repoName}`)
-        if(!username || !repoName) {
-            return setError("No valid username or repo name")
-        }
+
         chrome.storage.sync.set({
             github_username: username,
             github_leetsync_repo: repoName
@@ -162,13 +179,6 @@ const SelectRepositoryStep = ({ nextStep }: { nextStep: () => void}) => {
             navigate(0)
         })
     }
-
-    useEffect(() => {
-        chrome.storage.sync.get(["github_leetsync_token"], (result) => {
-            if (!result.github_leetsync_token) return
-            setAccessToken(result.github_leetsync_token)
-        })
-    }, [])
 
     return (
         <VStack w="100%">
@@ -213,29 +223,6 @@ const SelectRepositoryStep = ({ nextStep }: { nextStep: () => void}) => {
     )
 }
 
-const StartOnboarding = ({ nextStep }: { nextStep: () => void}) => {
-    return (
-        <VStack w="100%" h="100%" align="center" justify={"center"}>
-            <Logo />
-            <VStack w="100%">
-                <Heading size="lg">Welcome 👋</Heading>
-                <Text color="GrayText" fontSize={"sm"} w="90%" textAlign={"center"}>
-                    LeetSync is a Chrome extension that syncs your submissions to GitHub. Setup now.
-                </Text>
-            </VStack>
 
-            <VStack w="100%" py={4}>
-                <Button size="md" colorScheme={"green"} w="95%" onClick={() => nextStep()}>
-                    Complete Setup
-                </Button>
-                <Text fontSize={"xs"} color="gray.400">
-                    This will take less than 2 minutes
-                </Text>
-            </VStack>
-            <Footer />
-        </VStack>
-    )
-}
-
-export { AuthorizeWithGithub, AuthorizeWithLeetCode, SelectRepositoryStep, StartOnboarding }
+export { StartOnboarding, AuthorizeWithGithub, AuthorizeWithLeetCode, SelectRepositoryStep }
 
